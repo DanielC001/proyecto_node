@@ -25,10 +25,7 @@ export class AppointmentServiceImpl implements AppointmentService {
 
     public async getAllAppointments(): Promise<Appointment[]> {
         try{
-            
             const patients = await  this.appointmentRepository.getAllAppointment()
-            console.log("LLEgamos")
-            console.log(patients)
             return patients
         } catch (error){
             logger.error(error)
@@ -55,7 +52,7 @@ export class AppointmentServiceImpl implements AppointmentService {
             return appointment
         } catch (error) {
             logger.error('Failed to get appointment from service')
-            throw new GetByIdError("Failed to get appointment from service")
+            throw new GetByIdError("Failed to get appointment from service","appointment")
         }
     }
 
@@ -63,7 +60,7 @@ export class AppointmentServiceImpl implements AppointmentService {
         try {
             const existAppointment = await this.appointmentRepository.getAppointmentById(id)
             if (!existAppointment) {
-                throw new GetByIdError("")
+                throw new GetByIdError("Failed to get appointment from service","appointment")
             }
             const updateAppointment = {...existAppointment, ...updates}
             this.appointmentRepository.updateAppointment(id,updateAppointment)
@@ -79,7 +76,7 @@ export class AppointmentServiceImpl implements AppointmentService {
             const existAppointment =  await this.appointmentRepository.getAppointmentById(id)
 
             if (!existAppointment) {
-                throw new GetByIdError("")
+                throw new GetByIdError("Failed to get appointment from service","appointment")
             }
             await this.appointmentRepository.deleteAppointment(id)
         } catch (error) {
