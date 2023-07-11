@@ -2,7 +2,7 @@ import { Appointment } from './model'
 import { Request, Response } from 'express'
 import { AppointmentService } from './service'
 import logger from '../../../utils/logger'
-import { CreationError, DeleteError, GetByIdError, UpdateError } from '../../../utils/customErrors'
+import { CreationError, DeleteError, GetByIdError, NotFoundError, UpdateError } from '../../../utils/customErrors'
 
 
 export interface AppointmentController {
@@ -39,10 +39,10 @@ export class AppointmentControllerImpl implements AppointmentController {
             },
             (error) =>{
                 logger.error(error)
-                if (error instanceof CreationError){
+                if (error instanceof CreationError || error instanceof NotFoundError){
                     res.status(400).json({
                         error_name: error.name,
-                        message: "Failed Creating appointment"
+                        message: error.message
                     })
                 } else {
                     res.status(400).json({

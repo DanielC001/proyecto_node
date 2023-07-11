@@ -33,10 +33,10 @@ class DeleteError extends Error {
     }
 }
 
-class RecordNotFoundError extends Error {
-    constructor(){
-        super("Record has not found yet")
-        this.name = "RecordNotFound"
+class NotFoundError extends Error {
+    constructor(message:string){
+        super(message)
+        this.name = "NotFound"
     }
 }
 
@@ -45,5 +45,6 @@ export {
     GetByIdError,
     CreationError,
     UpdateError,
-    DeleteError
+    DeleteError,
+    NotFoundError
 }
