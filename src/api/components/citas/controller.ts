@@ -2,13 +2,15 @@ import { Appointment } from './model'
 import { Request, Response } from 'express'
 import { AppointmentService } from './service'
 import logger from '../../../utils/logger'
-import { DoctorCreationError, DoctorDeleteError, DoctorGetAllError, DoctorUpdateError, RecordNotFoundError } from '../../../config/customErrors'
+import { CreationError, DeleteError, GetByIdError, UpdateError } from '../../../utils/customErrors'
 
 
 export interface AppointmentController {
     getAllAppointment(req: Request, res: Response): void
     createAppointment(req: Request, res: Response): void  
     getAppointmentById(req: Request, res: Response): void  
+    updateAppointment(req: Request, res: Response): void  
+    deleteAppointment(req: Request, res: Response): void  
 }
 
 export class AppointmentControllerImpl implements AppointmentController {
@@ -37,7 +39,7 @@ export class AppointmentControllerImpl implements AppointmentController {
             },
             (error) =>{
                 logger.error(error)
-                if (error instanceof DoctorCreationError){
+                if (error instanceof CreationError){
                     res.status(400).json({
                         error_name: error.name,
                         message: "Failed Creating appointment"
@@ -54,7 +56,6 @@ export class AppointmentControllerImpl implements AppointmentController {
 
     public async getAppointmentById (req: Request, res: Response): Promise<void> {
         try{
-
             const id = parseInt(req.params.id)
             if (isNaN(id)){
                 throw new Error("Id must be a number") 
@@ -63,14 +64,53 @@ export class AppointmentControllerImpl implements AppointmentController {
             if (appointment) {
                 res.status(200).json(appointment)
             } else {
-                throw new RecordNotFoundError()
+                throw new GetByIdError("Failed getting appointment")
             }
         } catch (error) {
             logger.error(error)
-            if (error instanceof RecordNotFoundError){
+            if (error instanceof GetByIdError){
                 res.status(400).json({error: error.message})
             } else {
                 res.status(400).json({error: "Failed to retrieve patient"})
+            }
+        }
+    }
+
+    public async updateAppointment (req: Request, res: Response): Promise<void> {
+        try{
+            const id = parseInt(req.params.id)
+            const appointmentReq = req.body
+            const appointment = await this.appointmentService.updateAppointment(id,appointmentReq);
+
+            if (appointment) {
+                res.status(200).json(appointment)
+            } else {
+                throw new UpdateError("Failed update appointment");
+            }
+        } catch (error) {
+            logger.error(error)
+            if (error instanceof GetByIdError){
+                res.status(400).json({error: error.message})
+            } else  if (error instanceof UpdateError){
+                res.status(400).json({error: error.message})
+            } else {
+                res.status(400).json({error: "Failed to update appointment"})
+            }
+        }
+    }
+
+    public async deleteAppointment (req: Request, res: Response): Promise<void> {
+        try{
+            const id = parseInt(req.params.id)
+            await this.appointmentService.deleteAppointment(id)
+            
+            res.status(200).json({message: `Appointment was deleted successfully`})
+        } catch (error) {
+            logger.error(error)
+            if (error instanceof DeleteError){
+                res.status(400).json({error: error.message})
+            } else {
+                res.status(400).json({error: "Failed to delete Appointment"})
             }
         }
     }

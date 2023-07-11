@@ -211,3 +211,74 @@ undefined [undefined] info: Accept,*/*,User-Agent,node-fetch/1.0 (+https://githu
 2023-06-24T02:40:42.052Z-info: Server is listening on port 8087
 2023-06-24T02:40:46.437Z-error: Failed to create doctor dubt: error: database "gestion_citas1" does not exist
 2023-06-24T02:40:59.263Z-info: Server is listening on port 8087
+2023-07-10T02:46:12.250Z-info: Server is listening on port 5000
+2023-07-10T02:52:55.037Z-info: Server is listening on port 5000
+2023-07-10T03:26:10.097Z-info: Server is listening on port 5000
+2023-07-10T15:24:36.447Z-info: Server is listening on port 5000
+2023-07-10T15:28:15.051Z-info: Server is listening on port 5000
+2023-07-10T15:44:12.819Z-info: Server is listening on port 5000
+2023-07-10T15:44:24.923Z-error: Unexpected token } in JSON at position 43
+2023-07-10T15:48:20.625Z-info: Server is listening on port 5000
+2023-07-10T16:00:48.815Z-info: Server is listening on port 5000
+2023-07-10T16:11:06.611Z-info: Server is listening on port 5000
+2023-07-10T16:17:37.301Z-error: Failed to create appointment from service
+2023-07-10T16:18:06.237Z-error: Failed to create appointment from service
+2023-07-10T16:18:43.291Z-error: select * from "citas1" - no existe la relación «citas1»
+2023-07-10T16:18:43.295Z-error: Failed getting all appointments from service
+2023-07-10T16:18:57.640Z-error: select * from "citas1" - no existe la relación «citas1»
+2023-07-10T16:18:57.643Z-error: Failed getting all appointments from service
+2023-07-10T16:20:26.872Z-info: Server is listening on port 5000
+2023-07-10T17:10:28.239Z-info: Server is listening on port 5000
+2023-07-10T17:12:20.620Z-info: Server is listening on port 5000
+2023-07-10T18:42:29.520Z-info: Server is listening on port 5000
+2023-07-10T21:59:35.867Z-info: Server is listening on port 5000
+2023-07-10T23:23:03.049Z-info: Server is listening on port 5000
+2023-07-10T23:23:48.712Z-error: Failed to create appointment from service
+2023-07-10T23:29:01.531Z-info: Server is listening on port 5000
+2023-07-10T23:29:08.635Z-error: Failed to create appointment from service
+2023-07-10T23:41:20.594Z-info: Server is listening on port 5000
+2023-07-10T23:46:12.779Z-error: Failed to create appointment from service
+2023-07-10T23:46:21.128Z-error: Failed to create appointment from service
+2023-07-10T23:46:56.547Z-error: Failed get appointment by id in repository
+2023-07-10T23:46:56.551Z-error: Failed to get appointment from service
+2023-07-10T23:46:56.557Z-error: Record has not found yet
+2023-07-10T23:47:19.020Z-error: select * from "citas5" - no existe la relación «citas5»
+2023-07-10T23:47:19.043Z-error: Failed getting all appointments from service
+2023-07-10T23:47:33.476Z-error: Failed get appointment by id in repository
+2023-07-10T23:47:33.478Z-error: Failed to delete appointment from service
+2023-07-10T23:47:33.480Z-error: Failed to delete doctor
+2023-07-11T01:12:55.430Z-info: Server is listening on port 5000
+2023-07-11T01:13:04.372Z-error: Failed get appointment by id in repository
+2023-07-11T01:13:04.377Z-error: Failed to delete appointment from service
+2023-07-11T01:13:04.380Z-error: Failed to delete appointment from service
+2023-07-11T01:13:16.694Z-error: Failed get appointment by id in repository
+2023-07-11T01:13:16.698Z-error: Failed to update appointment from service
+2023-07-11T01:13:16.703Z-error: Failed to update appointment from service
+2023-07-11T01:13:20.997Z-error: Failed get appointment by id in repository
+2023-07-11T01:13:21.001Z-error: Failed to get appointment from service
+2023-07-11T01:13:21.002Z-error: Record has not found yet
+2023-07-11T01:13:24.541Z-error: Failed to create appointment from service
+2023-07-11T01:13:41.115Z-error: select * from "citas5" - no existe la relación «citas5»
+2023-07-11T01:13:41.118Z-error: Failed getting all appointments from service
+2023-07-11T01:14:27.311Z-error: Failed get appointment by id in repository
+2023-07-11T01:14:27.313Z-error: Failed to update appointment from service
+2023-07-11T01:14:27.323Z-error: Failed to update appointment from service
+2023-07-11T01:39:47.973Z-info: Server is listening on port 5000
+2023-07-11T15:29:59.576Z-info: Server is listening on port 5000
+2023-07-11T15:32:27.013Z-info: Server is listening on port 5000
+2023-07-11T15:32:57.753Z-error: la autentificaci�n password fall� para el usuario �postgres�
+2023-07-11T15:32:57.755Z-error: Failed getting all appointments from service
+2023-07-11T15:42:03.525Z-info: Server is listening on port 5000
+2023-07-11T15:42:20.700Z-error: select * from "citas5" - no existe la relación «citas5»
+2023-07-11T15:42:20.704Z-error: Failed getting all appointments from service
+2023-07-11T16:08:29.129Z-error: Error getting doctor
+2023-07-11T16:08:29.242Z-error: Internal Server Error
+2023-07-11T16:10:49.846Z-error: Error getting doctor
+2023-07-11T16:10:49.909Z-error: Internal Server Error
+2023-07-11T16:37:28.458Z-error: Error getting doctor
+2023-07-11T16:37:28.641Z-error: Internal Server Error
+2023-07-11T16:42:49.261Z-info: Server is listening on port 5000
+2023-07-11T16:51:33.582Z-error: Error getting doctor
+2023-07-11T16:51:33.618Z-error: Internal Server Error
+2023-07-11T17:05:59.101Z-error: Error getting doctor
+2023-07-11T17:05:59.159Z-error: Internal Server Error

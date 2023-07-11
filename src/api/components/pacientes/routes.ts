@@ -13,7 +13,8 @@ const controller: PatientController = new PatientControllerImpl(service)
 router.get('',  controller.getAllPatient.bind(controller))
 router.post('/create',  controller.createPatient.bind(controller))
 router.get('/:id',  controller.getPatientById.bind(controller))
-
+router.put('/:id',  controller.updatePatient.bind(controller))
+router.delete('/:id',  controller.deletePatient.bind(controller))
 
 
 export default router

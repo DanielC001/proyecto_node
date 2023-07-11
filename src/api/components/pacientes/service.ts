@@ -1,4 +1,4 @@
-import { DoctorCreationError, DoctorDeleteError, DoctorUpdateError, RecordNotFoundError } from "../../../config/customErrors"
+import { CreationError, DeleteError, GetByIdError,UpdateError } from "../../../utils/customErrors"
 import logger from "../../../utils/logger"
 import { PatientReq, Patient } from "./model"
 import { PatientRepository } from "./repository"
@@ -8,6 +8,8 @@ export interface PatientService {
     getAllPatients(): Promise<Patient[]>
     createPatient(patientReq: PatientReq): Promise<Patient>
     getPatientById(id: number): Promise<Patient>
+    updatePatient(id: number, updates:Partial<Patient>): Promise<Patient>
+    deletePatient(id: number): Promise<void>
 }
 
 export class PatientServiceImpl implements PatientService {
@@ -26,7 +28,7 @@ export class PatientServiceImpl implements PatientService {
         try{
             return this.patientRepository.createPatient(patientReq)
         } catch (error){
-            throw new DoctorCreationError("Failed to create patient from service")
+            throw new CreationError("Failed to create patient from service","patient")
         }
     }
 
@@ -35,9 +37,35 @@ export class PatientServiceImpl implements PatientService {
             return this.patientRepository.getPatientById(id)
         } catch (error) {
             logger.error('Failed to get patient from service')
-            throw new RecordNotFoundError()
+            throw new GetByIdError("Failed to get patient from service","patient")
+        }
+    }
+    
+    public async updatePatient(id: number, updates: Partial<PatientReq>): Promise<Patient> {
+        try {
+            const existPatient =  await this.patientRepository.getPatientById(id)
+            if (!existPatient) {
+                throw new GetByIdError("")
+            }
+            const updatePatient = {...existPatient, ...updates}
+            this.patientRepository.updatePatient(id,updatePatient)
+            return updatePatient
+        } catch (error) {
+            logger.error('Failed to update doctor from service')
+            throw new UpdateError("Failed to update doctor from service","patient")
         }
     }
 
-   
+    public async deletePatient(id: number): Promise<void> {
+        try {
+            const existPatient =  await this.patientRepository.getPatientById(id)
+            if (!existPatient) {
+                throw new GetByIdError("")
+            }
+            await this.patientRepository.deletePatient(id)
+        } catch (error) {
+            logger.error('Failed to delete patient from service')
+            throw new DeleteError("Failed to delete patient from service","patient")
+        }
+    }
 }

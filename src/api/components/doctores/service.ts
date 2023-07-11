@@ -1,4 +1,4 @@
-import { DoctorCreationError, DoctorDeleteError, DoctorUpdateError, RecordNotFoundError } from "../../../config/customErrors"
+import { CreationError, DeleteError,GetByIdError,UpdateError } from "../../../utils/customErrors"
 import logger from "../../../utils/logger"
 import { Doctor, DoctorReq } from "./model"
 import { DoctorRepository } from "./repository"
@@ -28,7 +28,7 @@ export class DoctorServiceImpl implements DoctorService {
         try{
             return this.doctorRepository.createDoctor(doctorReq)
         } catch (error){
-            throw new DoctorCreationError("Failed to create doctor from service")
+            throw new CreationError("Failed to create doctor from service","doctor")
         }
     }
 
@@ -37,7 +37,7 @@ export class DoctorServiceImpl implements DoctorService {
             return this.doctorRepository.getDoctorById(id)
         } catch (error) {
             logger.error('Failed to get doctor from service')
-            throw new RecordNotFoundError()
+            throw new GetByIdError("Failed to get doctor from service","doctor")
         }
     }
 
@@ -45,14 +45,14 @@ export class DoctorServiceImpl implements DoctorService {
         try {
             const existDoctor =  await this.doctorRepository.getDoctorById(id)
             if (!existDoctor) {
-                throw new RecordNotFoundError()
+                throw new GetByIdError("Failed to get doctor from service","doctor")
             }
             const updateDoctor = {...existDoctor, ...updates}
             this.doctorRepository.updateDoctor(id, updateDoctor)
             return updateDoctor
         } catch (error) {
             logger.error('Failed to update doctor from service')
-            throw new DoctorUpdateError()
+            throw new UpdateError("Failed to update doctor from service","doctor")
         }
     }
 
@@ -60,12 +60,12 @@ export class DoctorServiceImpl implements DoctorService {
         try {
             const existDoctor =  await this.doctorRepository.getDoctorById(id)
             if (!existDoctor) {
-                throw new RecordNotFoundError()
+                throw new GetByIdError("Failed to get doctor from service","doctor")
             }
             await this.doctorRepository.deleteDoctor(id)
         } catch (error) {
             logger.error('Failed to delete doctor from service')
-            throw new DoctorDeleteError()
+            throw new DeleteError("Failed to delete doctor from service","doctor");
         }
     }
 }

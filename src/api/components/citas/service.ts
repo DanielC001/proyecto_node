@@ -1,4 +1,4 @@
-import { DoctorCreationError, DoctorDeleteError, DoctorUpdateError, RecordNotFoundError, GetAllError } from "../../../config/customErrors"
+import { GetAllError, CreationError, UpdateError, DeleteError, GetByIdError } from "../../../utils/customErrors"
 import logger from "../../../utils/logger"
 import { AppointmentReq, Appointment, AppointmentResDB } from "./model"
 import { AppointmentRepository } from "./repository"
@@ -9,6 +9,8 @@ export interface AppointmentService {
     getAllAppointments(): Promise<Appointment[]>
     createAppointment(patientReq: AppointmentReq): Promise<Appointment>
     getAppointmentById(id: number): Promise<Appointment>
+    updateAppointment(id: number, updates:Partial<Appointment>): Promise<AppointmentResDB>
+    deleteAppointment(id: number): Promise<void>
 }
 
 
@@ -41,7 +43,7 @@ export class AppointmentServiceImpl implements AppointmentService {
             const appointment: Appointment = mapAppointment(appointmentDb, doctor)
             return appointment
         } catch (error){
-            throw new DoctorCreationError("Failed to create appointment from service")
+            throw new CreationError("Failed to create appointment from service","appointment");
         }
     }
 
@@ -53,11 +55,38 @@ export class AppointmentServiceImpl implements AppointmentService {
             return appointment
         } catch (error) {
             logger.error('Failed to get appointment from service')
-            throw new RecordNotFoundError()
+            throw new GetByIdError("Failed to get appointment from service")
         }
     }
 
-   
+    public  async updateAppointment(id: number, updates: Partial<AppointmentReq>): Promise<AppointmentResDB> {
+        try {
+            const existAppointment = await this.appointmentRepository.getAppointmentById(id)
+            if (!existAppointment) {
+                throw new GetByIdError("")
+            }
+            const updateAppointment = {...existAppointment, ...updates}
+            this.appointmentRepository.updateAppointment(id,updateAppointment)
+            return updateAppointment
+        } catch (error) {
+            logger.error('Failed to update appointment from service')
+            throw new UpdateError("Failed to update appointment from service","appointment");
+        }
+    }
+
+    public async deleteAppointment(id: number): Promise<void> {
+        try {
+            const existAppointment =  await this.appointmentRepository.getAppointmentById(id)
+
+            if (!existAppointment) {
+                throw new GetByIdError("")
+            }
+            await this.appointmentRepository.deleteAppointment(id)
+        } catch (error) {
+            logger.error('Failed to delete appointment from service')
+            throw new DeleteError("Failed to delete appointment from service","appointment");
+        }
+    }
 }
 
 

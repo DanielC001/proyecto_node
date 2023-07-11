@@ -2,13 +2,15 @@ import { Patient } from './model'
 import { Request, Response } from 'express'
 import { PatientService } from './service'
 import logger from '../../../utils/logger'
-import { DoctorCreationError, DoctorDeleteError, DoctorGetAllError, DoctorUpdateError, RecordNotFoundError } from '../../../config/customErrors'
+import { CreationError, DeleteError,  GetByIdError,UpdateError } from '../../../utils/customErrors'
 
 
 export interface PatientController {
     getAllPatient(req: Request, res: Response): void
     createPatient(req: Request, res: Response): void  
-    getPatientById(req: Request, res: Response): void  
+    getPatientById(req: Request, res: Response): void 
+    updatePatient(req: Request, res: Response): void 
+    deletePatient(req: Request, res: Response): void  
 }
 
 export class PatientControllerImpl implements PatientController {
@@ -35,7 +37,7 @@ export class PatientControllerImpl implements PatientController {
             },
             (error) =>{
                 logger.error(error)
-                if (error instanceof DoctorCreationError){
+                if (error instanceof CreationError){
                     res.status(400).json({
                         error_name: error.name,
                         message: "Failed Creating a patient"
@@ -60,11 +62,11 @@ export class PatientControllerImpl implements PatientController {
             if (patient) {
                 res.status(200).json(patient)
             } else {
-                throw new RecordNotFoundError()
+                throw new GetByIdError("Filed getting patient")
             }
         } catch (error) {
             logger.error(error)
-            if (error instanceof RecordNotFoundError){
+            if (error instanceof GetByIdError){
                 res.status(400).json({error: error.message})
             } else {
                 res.status(400).json({error: "Failed to retrieve patient"})
@@ -72,4 +74,41 @@ export class PatientControllerImpl implements PatientController {
         }
     }
 
+    public async updatePatient (req: Request, res: Response): Promise<void> {
+        try{
+            const id = parseInt(req.params.id)
+            const patientReq = req.body
+            const patient = await this.patientService.updatePatient(id,patientReq)
+            if (patient) {
+                res.status(200).json(patient)
+            } else {
+                throw new UpdateError("Failed to update patient","patient")
+            }
+        } catch (error) {
+            logger.error(error)
+            if (error instanceof GetByIdError){
+                res.status(400).json({error: error.message})
+            } else  if (error instanceof UpdateError){
+                res.status(400).json({error: error.message})
+            } else {
+                res.status(400).json({error: "Failed to update patient"})
+            }
+        }
+    }
+
+    public async deletePatient (req: Request, res: Response): Promise<void> {
+        try{
+            const id = parseInt(req.params.id)
+            await this.patientService.deletePatient(id)
+            
+            res.status(200).json({message: `Patient was deleted successfully`})
+        } catch (error) {
+            logger.error(error)
+            if (error instanceof DeleteError){
+                res.status(400).json({error: error.message})
+            } else {
+                res.status(400).json({error: "Failed to delete doctor"})
+            }
+        }
+    }
 }
