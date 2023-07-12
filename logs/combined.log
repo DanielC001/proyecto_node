@@ -315,3 +315,26 @@ undefined [undefined] info: Accept,*/*,User-Agent,node-fetch/1.0 (+https://githu
 2023-07-11T20:18:18.266Z-error: doctor not found
 2023-07-11T20:26:27.019Z-error: doctor not found
 2023-07-11T20:26:32.678Z-error: doctor not found
+2023-07-11T20:43:25.997Z-error: Error getting doctor
+2023-07-11T20:43:26.061Z-error: Internal Server Error
+2023-07-11T22:14:57.948Z-error: Error getting doctor
+2023-07-11T22:14:58.083Z-error: Internal Server Error
+2023-07-11T22:28:17.421Z-info: Server is listening on port 5000
+2023-07-11T22:31:34.151Z-info: Server is listening on port 5000
+2023-07-11T22:35:33.395Z-info: Server is listening on port 5000
+2023-07-11T22:36:00.007Z-error: Failed to create patient
+2023-07-11T22:37:04.644Z-info: Server is listening on port 5000
+2023-07-11T22:38:12.747Z-error: Failed to create patient
+2023-07-11T22:38:39.541Z-error: Failed to create patient
+2023-07-11T22:39:53.774Z-info: Server is listening on port 5000
+2023-07-11T22:40:31.538Z-error: Failed to create patient
+2023-07-11T23:04:55.998Z-info: Server is listening on port 5000
+2023-07-11T23:29:46.977Z-info: Server is listening on port 5000
+2023-07-11T23:32:15.309Z-info: Server is listening on port 5000
+2023-07-11T23:34:55.100Z-info: Server is listening on port 5000
+2023-07-11T23:53:55.292Z-info: Server is listening on port 5000
+2023-07-12T00:00:20.105Z-error: Failed to create patient
+2023-07-12T00:08:59.858Z-info: Server is listening on port 5000
+2023-07-12T00:09:40.608Z-error: Failed to create patient
+2023-07-12T00:10:07.432Z-error: Failed to create patient
+2023-07-12T00:14:26.416Z-info: Server is listening on port 5000

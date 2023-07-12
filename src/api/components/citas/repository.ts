@@ -6,7 +6,8 @@ import { GetAllError,CreationError, UpdateError, DeleteError, GetByIdError} from
 export class AppointmentRepository {
     public async createAppointment(appointment: AppointmentReq): Promise<AppointmentResDB> {
         try {
-            const [createdAppointment] =  await db('citas').insert(appointment).returning('*') 
+            const objReq = {...appointment,created_at: new Date,updated_at: new Date()}
+            const [createdAppointment] =  await db('citas').insert(objReq).returning('*') 
             return createdAppointment
         } catch (error) {
             throw new CreationError(`Failed to create appointment : ${error}`,'appointment')
@@ -33,7 +34,8 @@ export class AppointmentRepository {
     
     public async updateAppointment(id: number, updates: Partial<AppointmentReq>): Promise<void> {
         try{
-            await db('citas').where({ id_cita: id }).update(updates)
+            const appoUpdate = {...updates,updated_at: new Date()}
+            await db('citas').where({ id_cita: id }).update(appoUpdate)
         } catch (error){
             logger.error( 'Failed updated appointment in repository', {error})
             throw new UpdateError('Failed updated appointment in repository','appointment');

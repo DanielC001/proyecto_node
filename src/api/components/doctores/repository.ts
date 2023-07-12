@@ -6,7 +6,8 @@ import { CreationError, DeleteError,GetAllError, GetByIdError, UpdateError } fro
 export class DoctorRepository {
     public async createDoctor(doctor: DoctorReq): Promise<Doctor> {
         try {
-            const [createdDoctor] =  await db('doctores').insert(doctor).returning('*') // select * from doctores where id_doctor=?
+            const objReq = {...doctor,created_at: new Date(),updated_at: new Date()}
+            const [createdDoctor] =  await db('doctores').insert(objReq).returning('*') // select * from doctores where id_doctor=?
             return createdDoctor
         } catch (error) {
             throw new CreationError("Failed to create doctor","doctor")
@@ -33,7 +34,8 @@ export class DoctorRepository {
 
     public async updateDoctor(id: number, updates: Partial<DoctorReq>): Promise<void> {
         try{
-            await db('doctores').where({ id_doctor: id }).update(updates)
+            const docUpdate = {...updates,updated_at: new Date()}
+            await db('doctores').where({ id_doctor: id }).update(docUpdate)
         } catch (error){
             logger.error( 'Failed updated doctor in repository', {error})
             throw new UpdateError("Failed updated doctor in repository","doctor")
