@@ -58,25 +58,28 @@ describe('DoctorController', () => {
     describe('createDoctor', () => {
         it('should create a new doctor and return info', async () => {
             // Mock Process
-            const doctorRes: Doctor = { id_doctor: 1, nombre: 'Carlos', apellido: 'Caceres', especialidad: 'Medicina General', consultorio: 100}
-            const doctorReq: DoctorReq = {
+            const doctorRes: Doctor = { id_doctor: 1, nombre: 'Carlos', apellido: 'Caceres', especialidad: 'Medicina general', consultorio: 400}
+            //respuesta
+            const doctorReq: DoctorReq = { //peticion
                 nombre: 'Carlos',
                 apellido: 'Caceres',
-                especialidad: 'Medicina General',
+                especialidad: 'Medicina general',
                 consultorio: 400
             };
+            const objRes = {...doctorRes,correo:null,created_at: new Date(),updated_at: new Date()};
+            //const objReq = {...doctorReq,created_at: new Date(),updated_at: new Date()};
             (mockReq.body as DoctorReq) = doctorReq;
-            (doctorService.createDoctor as jest.Mock).mockResolvedValue(doctorRes)
+            (doctorService.createDoctor as jest.Mock).mockResolvedValue(objRes);
 
             // Method execution
             await doctorController.createDoctor(mockReq, mockRes)
 
             // Asserts
             expect(doctorService.createDoctor).toHaveBeenCalledWith(doctorReq)
-            expect(mockRes.json).toHaveBeenCalledWith(doctorRes)
+            expect(mockRes.json).toHaveBeenCalledWith(objRes)
             expect(mockRes.status).toHaveBeenCalledWith(201)
         })
-
+        
         it('should be handler error and return 400 status', async () => {
             const error = new Error('Internal Server Error');
             (mockReq.body) = {};
@@ -84,8 +87,7 @@ describe('DoctorController', () => {
 
             await doctorController.createDoctor(mockReq, mockRes)
 
-            expect(doctorService.createDoctor).toHaveBeenCalledWith({})
-            expect(mockRes.json).toHaveBeenCalledWith({ message: "Internal Server Error" })
+            expect(mockRes.json).toHaveBeenCalledWith({ message: "\"nombre\" is required"})
             expect(mockRes.status).toHaveBeenCalledWith(400)
         })
     })

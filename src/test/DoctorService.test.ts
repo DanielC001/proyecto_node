@@ -4,7 +4,7 @@ import { DoctorRepository } from "../api/components/doctores/repository"
 
 
 describe('DoctorService', () => {
-    let doctorSerivce: DoctorServiceImpl
+    let doctorService: DoctorServiceImpl
     let doctorRepository: DoctorRepository
 
     beforeEach( () => {
@@ -16,7 +16,7 @@ describe('DoctorService', () => {
             deleteDoctor: jest.fn()
         }
 
-        doctorSerivce = new DoctorServiceImpl(doctorRepository)
+        doctorService = new DoctorServiceImpl(doctorRepository)
     })
 
     describe('getAllDoctors', () => {
@@ -29,7 +29,7 @@ describe('DoctorService', () => {
             (doctorRepository.getAllDoctors as jest.Mock).mockResolvedValue(doctors)
 
             // Method execution
-            const result  = await doctorSerivce.getAllDoctors()
+            const result  = await doctorService.getAllDoctors()
 
             // Asserts
             expect(doctorRepository.getAllDoctors).toHaveBeenCalled()
@@ -40,7 +40,7 @@ describe('DoctorService', () => {
             (doctorRepository.getAllDoctors as jest.Mock).mockResolvedValue([])
 
             // Method execution
-            const result  = await doctorSerivce.getAllDoctors()
+            const result  = await doctorService.getAllDoctors()
 
             // Asserts
             expect(doctorRepository.getAllDoctors).toHaveBeenCalled()
@@ -57,7 +57,7 @@ describe('DoctorService', () => {
             (doctorRepository.createDoctor as jest.Mock).mockResolvedValue(doctorRes)
 
             // Method execution
-            const result  = await doctorSerivce.createDoctor(doctorReq)
+            const result  = await doctorService.createDoctor(doctorReq)
 
             // Asserts
             expect(doctorRepository.createDoctor).toHaveBeenCalledWith(doctorReq)
@@ -69,7 +69,7 @@ describe('DoctorService', () => {
             const error1 = new Error('Failed to create doctor');
             (doctorRepository.createDoctor as jest.Mock).mockRejectedValue(error1)
 
-            await expect(doctorSerivce.createDoctor(doctorReq)).rejects.toThrowError(error1)
+            await expect(doctorService.createDoctor(doctorReq)).rejects.toThrowError(error1)
             expect(doctorRepository.createDoctor).toHaveBeenCalledWith(doctorReq)
         })
     })
@@ -83,7 +83,7 @@ describe('DoctorService', () => {
             (doctorRepository.getDoctorById as jest.Mock).mockResolvedValue(doctor)
 
             // Method execution
-            const result  = await doctorSerivce.getDoctorById(doctorId)
+            const result  = await doctorService.getDoctorById(doctorId)
 
             // Asserts
             expect(doctorRepository.getDoctorById).toHaveBeenCalledWith(doctorId)
@@ -95,7 +95,7 @@ describe('DoctorService', () => {
             (doctorRepository.getDoctorById as jest.Mock).mockResolvedValue(null)
 
             // Method execution
-            const result  = await doctorSerivce.getDoctorById(doctorId)
+            const result  = await doctorService.getDoctorById(doctorId)
 
             // Asserts
             expect(doctorRepository.getDoctorById).toHaveBeenCalledWith(doctorId)
@@ -108,7 +108,7 @@ describe('DoctorService', () => {
             (doctorRepository.getDoctorById as jest.Mock).mockRejectedValue(error)
 
             // Asserts
-            await expect(doctorSerivce.getDoctorById(doctorId)).rejects.toThrowError(error)
+            await expect(doctorService.getDoctorById(doctorId)).rejects.toThrowError(error)
             expect(doctorRepository.getDoctorById).toHaveBeenCalledWith(doctorId)
         })
     })
