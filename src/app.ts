@@ -9,7 +9,7 @@ dotenv.config({
 });
 
 const app = express()
-//const port = 8087
+const port = 8087
 
 
 // Crea un middleware para convertir 
@@ -19,7 +19,7 @@ app.use( errorHandlerMiddleware )
 app.use('/api/v1', routes)
 
 
-app.listen(process.env.PORT, () =>{
-    logger.info(`Server is listening on port ${process.env.PORT}`)
+app.listen(port, () =>{
+    logger.info(`Server is listening on port ${port}`)
 }
 )
